@@ -1,0 +1,18 @@
+with open("rocket.txt", encoding="UTF-8") as f:
+    #открытие и разбиение файла по строкам
+    f = [x.strip().split("@") for x in f.readlines()]
+a = input("введите шифр:")
+#ввод данных пользователя
+while a != "nlo":
+    flg = False
+    for elem in f:
+        if elem[1] == a:
+            flg = True
+            break
+        #поиск соответствующего шифра
+    if flg:
+        print(f"Шифр: {elem[1]} от {elem[-1]} был получен {elem[0]}")
+    else:
+        print("такой сигнал ещё не был получен")
+        #вывод данных
+    a = input("введите шифр:")
