@@ -1,0 +1,47 @@
+with open("rocket.txt", encoding="UTF-8") as f:
+    f = [x.strip().split("@") for x in f.readlines()]
+del f[0]
+#сортировка файла вставками по дате
+for j in range(1, len(f)):
+    value = f[j]
+    i = j - 1
+    while i >= 0 and value[0] < f[i][0]:
+        f[i + 1] = f[i]
+        i -= 1
+    f[i + 1] = value
+hash_table = dict()
+parts = dict()
+#словарь с названиями запчастей и количеством кодов к ним
+for elem in f:
+    if elem[-1] in parts:
+        parts[elem[-1]][0] += 1
+    else:
+        parts[elem[-1]] = [1, elem[0]]
+    #подсчёт количества кодов для детали
+maxi = 0
+for elem in parts:
+    if parts[elem][0] > maxi:
+        maxi = parts[elem][0]
+for x in parts:
+    if parts[x][0] in hash_table:
+        hash_table[parts[x][0]].append((x, parts[x][1]))
+    else:
+        hash_table[parts[x][0]] = [(x, parts[x][1])]
+
+for elem in hash_table:
+    for j in range(1, len(hash_table[elem])):
+        value = hash_table[elem][j]
+        i = j - 1
+        while i >= 0 and value[1] < hash_table[elem][i][1]:
+            hash_table[elem][i + 1] = hash_table[elem][i]
+            i -= 1
+        hash_table[elem][i + 1] = value
+cnt = 0
+while maxi > 0 and cnt < 10:
+    if maxi in hash_table:
+        for elem in hash_table[maxi]:
+            print(elem[0], maxi)
+            cnt += 1
+            if cnt == 10:
+                break
+    maxi -= 1
