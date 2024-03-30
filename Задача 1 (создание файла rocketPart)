@@ -1,0 +1,31 @@
+with open("rocket.txt", encoding="UTF-8") as f:
+    #открытие и разбиение файла по строкам
+    f = [x.strip().split("@") for x in f.readlines()]
+parts = dict()
+#словарь с названиями запчастей и количеством кодов к ним
+for elem in f[1:]:
+    #просмотр всех строк без учёта заголовков
+    if elem[-1] in parts:
+        parts[elem[-1]] += 1
+    else:
+        parts[elem[-1]] = 1
+    #подсчёт количества кодов для детали
+
+with open("rocket_part.txt", 'w',  encoding="UTF-8", newline="\n") as file:
+    file.write("rocketPart@countCode\n")
+    #запись заголовка
+    for elem in parts:
+        file.write(f"{elem}@{str(parts[elem])}\n")
+        #запись элементов в файл
+    file.close()
+
+with open("rocket_part.txt", encoding="UTF-8") as f:
+    f = [x.strip().split("@") for x in f.readlines()]
+#открытие обработанного файла
+part = input()
+#получение названия детали
+for elem in f:
+    if elem[0] == part:
+        #поиск соответствующей детали
+        print(elem[1])
+        #вывод количества шифров
