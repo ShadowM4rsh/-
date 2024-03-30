@@ -1,0 +1,15 @@
+with open("rocket.txt", encoding="UTF-8") as f:
+    #открытие и разбиение файла по строкам
+    f = [x.strip().split("@") for x in f.readlines()]
+#сортировка файла вставками в алфавитном порядке
+for j in range(1, len(f)):
+    value = f[j]
+    i = j - 1
+    while i >= 0 and value[1] < f[i][1]:
+        f[i + 1] = f[i]
+        i -= 1
+    f[i + 1] = value
+#выборка ошибок с числом 312
+for elem in f:
+    if "312" in elem[1]:
+        print(f"{elem[1]} для {elem[2]}")
